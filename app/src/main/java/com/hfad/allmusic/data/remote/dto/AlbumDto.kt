@@ -1,6 +1,6 @@
 package com.hfad.allmusic.data.remote.dto
 
-data class Album(
+data class AlbumDto(
     val cover: String,
     val cover_big: String,
     val cover_medium: String,
