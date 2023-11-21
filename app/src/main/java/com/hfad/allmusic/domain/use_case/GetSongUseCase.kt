@@ -1,10 +1,8 @@
 package com.hfad.allmusic.domain.use_case
 
 import com.hfad.allmusic.common.Resource
-import com.hfad.allmusic.data.remote.dto.DataDto
-import com.hfad.allmusic.data.remote.dto.MainDataDto
 import com.hfad.allmusic.data.remote.dto.toData
-import com.hfad.allmusic.domain.model.Data
+import com.hfad.allmusic.domain.model.Song
 import com.hfad.allmusic.domain.repository.SongRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -15,7 +13,7 @@ import javax.inject.Inject
 class GetSongUseCase @Inject constructor(
     private val repository: SongRepository
 ) {
-    operator fun invoke(songName: String): Flow<Resource<List<Data>>> = flow {
+    operator fun invoke(songName: String): Flow<Resource<List<Song>>> = flow {
         try {
 
             emit(Resource.Loading())
