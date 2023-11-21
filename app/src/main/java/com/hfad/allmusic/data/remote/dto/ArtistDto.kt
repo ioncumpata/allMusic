@@ -1,6 +1,6 @@
 package com.hfad.allmusic.data.remote.dto
 
-data class Artist(
+data class ArtistDto(
     val id: Int,
     val link: String,
     val name: String,
