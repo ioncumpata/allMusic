@@ -8,7 +8,9 @@ import com.hfad.allmusic.databinding.ActivityMainBinding
 import com.hfad.allmusic.presentation.fragment_adapter.FragmentAdapter
 import com.hfad.allmusic.presentation.playlist_screen.PlaylistFragment
 import com.hfad.allmusic.presentation.search_screen.SearchFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding

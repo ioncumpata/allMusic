@@ -1,6 +1,6 @@
 package com.hfad.allmusic.data.remote.dto
 
-import com.hfad.allmusic.domain.model.Song
+import com.hfad.allmusic.domain.model.Data
 
 data class DataDto(
     val album: AlbumDto,
@@ -21,11 +21,12 @@ data class DataDto(
     val type: String
 )
 
-fun DataDto.toData(): Song {
-    return Song(
+fun DataDto.toData(): Data {
+    return Data(
         id = id,
-        artist = artist,
+        title = title,
         duration = duration,
-        preview = preview
+        preview = preview,
+        imageCover = album.toAlbum()
     )
 }
