@@ -5,6 +5,6 @@ import com.hfad.allmusic.domain.model.MainData
 
 data class SongListState(
     val isLoading: Boolean = false,
-    val songs: List<MainData> = emptyList(),
+    val songs: MainData? = null ,
     val isError: String = ""
 )

@@ -16,20 +16,20 @@ import javax.inject.Inject
 class GetSongUseCase @Inject constructor(
     private val repository: SongRepository
 ) {
-    operator fun invoke(songName: String): Flow<Resource<List<MainData>>> = flow {
+    operator fun invoke(songName: String): Flow<Resource<MainData>> = flow {
         try {
 
             emit(Resource.Loading())
-            val songs = repository.getSongByName(songName).map { it.toMainData() }
+            val songs = repository.getSongByName(songName).toMainData()
             emit(Resource.Success(songs))
 
         }catch (e: HttpException){
             emit(Resource.Error(e.localizedMessage ?: "An unexpected error occurred"))
-            Log.d("HttpException", e.localizedMessage?: "Here is the problem")
+
 
         }catch (e: IOException){
             emit(Resource.Error("Couldn't reach server. Check your internet connection."))
-            Log.d("IOException", "Here is the problem")
+
 
         }
     }

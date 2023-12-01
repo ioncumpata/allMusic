@@ -11,9 +11,11 @@ import com.hfad.allmusic.R
 import com.hfad.allmusic.databinding.ListSearchItemBinding
 import com.hfad.allmusic.domain.model.Data
 import com.squareup.picasso.Picasso
+import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Inject
 
 
-class SearchAdapter(private val context: Context) :
+class SearchAdapter @Inject constructor(@ApplicationContext private val context: Context) :
     RecyclerView.Adapter<SearchAdapter.SearchHolder>() {
 
     var items: List<Data> = arrayListOf()
@@ -27,7 +29,7 @@ class SearchAdapter(private val context: Context) :
         val binding = ListSearchItemBinding.bind(item)
         fun bind(song: Data, context: Context) = with(binding) {
 
-            Picasso.get().load("https:" + song.imageCover.cover).into(imageCover)
+            Picasso.get().load( song.imageCover.cover).into(imageCover)
             titleView.text = song.title
             val mediaPlayer = MediaPlayer.create(context, song.preview.toUri())
 

@@ -10,7 +10,7 @@ class SongRepositoryImpl @Inject constructor(
     private val api: ApiMusicInterface
 ) : SongRepository {
 
-    override suspend fun getSongByName(name: String): List<MainDataDto> {
+    override suspend fun getSongByName(name: String): MainDataDto {
 
         return api.getSongByName(name)
 

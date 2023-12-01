@@ -1,29 +1,39 @@
 package com.hfad.allmusic.presentation.search_screen
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.SearchView.OnQueryTextListener
+import android.widget.Toast
+import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.hfad.allmusic.common.Resource
 import com.hfad.allmusic.databinding.FragmentSearchBinding
 import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.time.Duration
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class SearchFragment : Fragment() {
 
     private lateinit var binding: FragmentSearchBinding
-    private lateinit var adapter: SearchAdapter
     private val viewModel: SearchViewModel by viewModels()
+
+    @Inject
+    lateinit var adapter: SearchAdapter
 
 
     override fun onCreateView(
@@ -37,7 +47,7 @@ class SearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = SearchAdapter(requireContext())
+
 
         val layoutManager = LinearLayoutManager(context)
         binding.rcView.layoutManager = layoutManager
@@ -61,16 +71,24 @@ class SearchFragment : Fragment() {
         CoroutineScope(Dispatchers.IO).launch {
             viewModel.state.collectLatest { value ->
 
-                withContext(Dispatchers.Main){
+                withContext(Dispatchers.Main) {
 
-                    if(value.isLoading){}
-                    if (value.isError.isNotBlank()){}
-                    else{
-                        adapter.items = value.songs.flatMap { it.data }
+                    if (value.isLoading) {
+                        binding.progressBar.visibility = View.VISIBLE
+                    } else {
+
+                        if (value.isError.isNotBlank()) {
+                            Toast.makeText(requireContext(), value.isError, Toast.LENGTH_LONG)
+                                .show()
+                        } else {
+
+                            adapter.items = value.songs?.data ?: emptyList()
+                            hideKeyboard(binding.searchView)
+                            binding.progressBar.visibility = View.GONE
+                        }
+
 
                     }
-
-
                 }
             }
 
@@ -78,6 +96,11 @@ class SearchFragment : Fragment() {
 
 
     }
+    private fun hideKeyboard(view: View) {
+        val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
+    }
+
 
     companion object {
 

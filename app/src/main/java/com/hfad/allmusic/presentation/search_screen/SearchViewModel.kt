@@ -1,6 +1,10 @@
 package com.hfad.allmusic.presentation.search_screen
 
+import android.content.Context
 import android.util.Log
+import android.view.View
+import android.view.inputmethod.InputMethodManager
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hfad.allmusic.common.Resource
@@ -21,27 +25,29 @@ class SearchViewModel @Inject constructor(
 
 
     fun getSongs(name: String) = viewModelScope.launch(Dispatchers.IO) {
+
         delay(500L)
 
         getSongUseCase(name).collect { result ->
             when (result) {
                 is Resource.Success -> {
-                    _state.value = SongListState(songs = result.data ?: emptyList())
-                    Log.d("GetSongSuccess", "${result.data}")
+
+                    _state.value = SongListState(songs = result.data)
 
                 }
                 is Resource.Error -> {
                     _state.value = SongListState(
                         isError = result.message ?: "An error occur"
                     )
-                    Log.d("GetSongError", "Problems")
 
                 }
                 is Resource.Loading -> {
                     _state.value = SongListState(isLoading = true)
-                    Log.d("GetSongLoading", "Problems")
+
                 }
             }
         }
     }
+
+
 }

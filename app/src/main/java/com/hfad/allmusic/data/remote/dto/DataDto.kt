@@ -24,7 +24,7 @@ data class DataDto(
 fun DataDto.toData(): Data {
     return Data(
         id = id,
-        title = title,
+        title = title_short,
         duration = duration,
         preview = preview,
         imageCover = album.toAlbum()

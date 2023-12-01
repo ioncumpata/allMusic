@@ -11,5 +11,5 @@ interface ApiMusicInterface {
     @Headers("X-RapidAPI-Key: f3e937b351msh7645c07e5ecaa81p1ec214jsn4eaa57bdb635",
     "X-RapidAPI-Host: deezerdevs-deezer.p.rapidapi.com")
     @GET("search")
-    suspend fun getSongByName(@Query("q") name: String): List<MainDataDto>
+    suspend fun getSongByName(@Query("q") name: String): MainDataDto
 }

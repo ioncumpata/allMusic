@@ -4,5 +4,5 @@ import com.hfad.allmusic.data.remote.dto.MainDataDto
 
 interface SongRepository {
 
-    suspend fun getSongByName(name: String): List<MainDataDto>
+    suspend fun getSongByName(name: String): MainDataDto
 }
