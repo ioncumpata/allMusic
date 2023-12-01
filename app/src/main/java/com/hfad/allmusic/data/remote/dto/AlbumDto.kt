@@ -1,5 +1,7 @@
 package com.hfad.allmusic.data.remote.dto
 
+import com.hfad.allmusic.domain.model.Album
+
 data class AlbumDto(
     val cover: String,
     val cover_big: String,
@@ -12,3 +14,9 @@ data class AlbumDto(
     val tracklist: String,
     val type: String
 )
+
+fun AlbumDto.toAlbum(): Album {
+    return Album(
+        cover = cover
+    )
+}
