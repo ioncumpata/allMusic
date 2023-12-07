@@ -13,6 +13,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.hfad.allmusic.common.Resource
 import com.hfad.allmusic.databinding.FragmentSearchBinding
@@ -68,7 +69,7 @@ class SearchFragment : Fragment() {
             }
 
         })
-        CoroutineScope(Dispatchers.IO).launch {
+        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
             viewModel.state.collectLatest { value ->
 
                 withContext(Dispatchers.Main) {
